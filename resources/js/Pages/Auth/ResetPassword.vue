@@ -38,7 +38,7 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Reset Password" />
+    <Head title="MDP oublié" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"

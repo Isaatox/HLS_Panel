@@ -43,7 +43,7 @@ const submit = () => {
 <template>
   <LayoutGuest>
 
-    <Head title="Login" />
+    <Head title="Connexion" />
 
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" form @submit.prevent="submit">

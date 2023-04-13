@@ -181,16 +181,17 @@ class UserController extends Controller
     public function accountInfoStore(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.\Auth::user()->id],
+//            'name' => ['required', 'string', 'max:255'],
+//            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.\Auth::user()->id],
+            'picture_profile' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = \Auth::user()->update($request->except(['_token']));
 
         if ($user) {
-            $message = 'Account updated successfully.';
+            $message = 'Compte modifié avec succès.' ;
         } else {
-            $message = 'Error while saving. Please try again.';
+            $message = 'Erreur pendant la sauvegarde. Merci de réessayer.';
         }
 
         return redirect()->route('admin.account.info')->with('message', __($message));

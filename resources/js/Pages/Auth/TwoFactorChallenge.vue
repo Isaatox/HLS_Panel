@@ -42,7 +42,7 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Two-factor Confirmation" />
+    <Head title="2 facteur auth" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"

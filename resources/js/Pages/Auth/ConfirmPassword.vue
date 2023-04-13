@@ -29,7 +29,7 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Secure Area" />
+    <Head title="Zone sécurisée" />
     
     <SectionFullScreen
       v-slot="{ cardClass }"
@@ -44,7 +44,7 @@ const submit = () => {
 
         <FormField>
           <div class="mb-4 text-sm text-gray-600">
-            This is a secure area of the application. Please confirm your password before continuing.
+            Ceci est une zone sécurisée de l'application. Merci de renseigner ton mot de passe avant de continuer
           </div>
         </FormField>
 

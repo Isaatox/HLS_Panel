@@ -1,5 +1,5 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
 import { computed, ref, onMounted } from 'vue'
 import { useMainStore } from '@/Stores/main'
 import {
@@ -25,10 +25,13 @@ import CardBoxClient from '@/Components/CardBoxClient.vue'
 import LayoutAuthenticated from '@/Layouts/LayoutAuthenticated.vue'
 import SectionTitleLineWithButton from '@/Components/SectionTitleLineWithButton.vue'
 import SectionBannerStarOnGitHub from '@/Components/SectionBannerStarOnGitHub.vue'
+import UserCard from '@/Components/UserCard.vue'
 const chartData = ref(null)
 const fillChartData = () => {
   chartData.value = chartConfig.sampleChartData()
 }
+const userName = computed(() => usePage().props.auth.user.name)
+console.log(userName)
 onMounted(() => {
   fillChartData()
 })
@@ -44,117 +47,52 @@ const transactionBarItems = computed(() => mainStore.history)
 
 <template>
   <LayoutAuthenticated>
+
     <Head title="Dashboard" />
     <SectionMain>
-      <SectionTitleLineWithButton
-        :icon="mdiChartTimelineVariant"
-        title="Overview"
-        main
-      >
-        <BaseButton
-          href="https://github.com/balajidharma/laravel-vue-admin-panel"
-          target="_blank"
-          :icon="mdiGithub"
-          label="Star on GitHub"
-          color="contrast"
-          rounded-full
-          small
-        />
+      <SectionTitleLineWithButton :icon="mdiChartTimelineVariant" title="Dashboard" main>
+<!--        <BaseButton href="https://github.com/justboil/admin-one-vue-tailwind" target="_blank" :icon="mdiGithub"-->
+<!--          label="Star on GitHub" color="contrast" rounded-full small />-->
       </SectionTitleLineWithButton>
-      
+
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-        <CardBoxWidget
-          trend="12%"
-          trend-type="up"
-          color="text-emerald-500"
-          :icon="mdiAccountMultiple"
-          :number="512"
-          label="Clients"
-        />
-        <CardBoxWidget
-          trend="12%"
-          trend-type="down"
-          color="text-blue-500"
-          :icon="mdiCartOutline"
-          :number="7770"
-          prefix="$"
-          label="Sales"
-        />
-        <CardBoxWidget
-          trend="Overflow"
-          trend-type="alert"
-          color="text-red-500"
-          :icon="mdiChartTimelineVariant"
-          :number="256"
-          suffix="%"
-          label="Performance"
-        />
+        <CardBoxWidget trend="12%" trend-type="up" color="text-emerald-500" :icon="mdiAccountMultiple" :number="512"
+          label="Clients" />
+        <CardBoxWidget trend="12%" trend-type="down" color="text-blue-500" :icon="mdiCartOutline" :number="7770"
+          prefix="$" label="Sales" />
+        <CardBoxWidget trend="Overflow" trend-type="alert" color="text-red-500" :icon="mdiChartTimelineVariant"
+          :number="256" suffix="%" label="Performance" />
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 ">
         <div class="flex flex-col justify-between">
-          <CardBoxTransaction
-            v-for="(transaction,index) in transactionBarItems"
-            :key="index"
-            :amount="transaction.amount"
-            :date="transaction.date"
-            :business="transaction.business"
-            :type="transaction.type"
-            :name="transaction.name"
-            :account="transaction.account"
-          />
+          <UserCard :name="userName" tempsTC="00:00:00" division="U.S. Secret Service"/>
         </div>
         <div class="flex flex-col justify-between">
-          <CardBoxClient
-            v-for="client in clientBarItems"
-            :key="client.id"
-            :name="client.name"
-            :login="client.login"
-            :date="client.created"
-            :progress="client.progress"
-          />
+          <CardBoxClient v-for="client in clientBarItems" :key="client.id" :name="client.name" :login="client.login"
+            :date="client.created" :progress="client.progress" />
         </div>
       </div>
 
-      <SectionBannerStarOnGitHub />
+<!--      <SectionBannerStarOnGitHub class="mt-6 mb-6" />-->
 
-      <SectionTitleLineWithButton
-        :icon="mdiChartPie"
-        title="Trends overview"
-      />
+      <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
+        <BaseButton :icon="mdiReload" color="whiteDark" @click="fillChartData" />
+      </SectionTitleLineWithButton>
 
-      <CardBox
-        title="Performance"
-        :icon="mdiFinance"
-        :header-icon="mdiReload"
-        class="mb-6"
-        @header-icon-click="fillChartData"
-      >
+      <CardBox class="mb-6">
         <div v-if="chartData">
-          <line-chart
-            :data="chartData"
-            class="h-96"
-          />
+          <line-chart :data="chartData" class="h-96" />
         </div>
       </CardBox>
 
-      <SectionTitleLineWithButton
-        :icon="mdiAccountMultiple"
-        title="Clients"
-      />
+      <SectionTitleLineWithButton :icon="mdiAccountMultiple" title="Clients" />
 
-      <NotificationBar
-        color="info"
-        :icon="mdiMonitorCellphone"
-      >
-        <b>Responsive table.</b> Collapses on mobile
-      </NotificationBar>
+<!--      <NotificationBar color="info" :icon="mdiMonitorCellphone">-->
+<!--        <b>Responsive table.</b> Collapses on mobile-->
+<!--      </NotificationBar>-->
 
-      <CardBox
-        :icon="mdiMonitorCellphone"
-        title="Responsive table"
-        has-table
-      >
+      <CardBox has-table>
         <TableSampleClients />
       </CardBox>
     </SectionMain>

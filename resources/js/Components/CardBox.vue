@@ -63,7 +63,7 @@ const submit = e => {
   <component
     :is="is"
     :class="componentClass"
-    class="bg-white flex flex-col"
+    class="bg-white h-full flex flex-col"
     @submit="submit"
   >
     <header

@@ -30,7 +30,7 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Forgot Password" />
+    <Head title="Mot de passe oublié" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"

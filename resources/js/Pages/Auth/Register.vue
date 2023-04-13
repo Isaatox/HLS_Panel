@@ -36,7 +36,7 @@ const submit = () => {
 
 <template>
   <LayoutGuest>
-    <Head title="Register" />
+    <Head title="Inscription" />
 
     <SectionFullScreen
       v-slot="{ cardClass }"
